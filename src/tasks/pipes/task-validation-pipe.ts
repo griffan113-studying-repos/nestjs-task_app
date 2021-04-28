@@ -1,9 +1,9 @@
 /*
  *
- *  Custom Pipes must implement PipeTransform to inherit properties;
+ * - Custom Pipes must implement PipeTransform to inherit properties;
  *
  */
-import { TaskStatus } from "../task.module";
+import { TaskStatus } from "../taskStatuses.enum";
 import {
   ArgumentMetadata,
   BadRequestException,
