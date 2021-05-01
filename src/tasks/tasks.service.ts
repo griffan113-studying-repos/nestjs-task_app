@@ -19,24 +19,10 @@ export class TasksService {
     @InjectRepository(TaskRepository)
     private taskRepository: TaskRepository
   ) {}
-  // getAllTasks(): Task[] {
-  //   console.log("GET on tasks path!");
-  //   return this.tasks;
-  // }
-  // getTasksWithFilters(filterDto: GetTasksFilterDTO): Task[] {
-  //   const { status, search } = filterDto;
-  //   let tasks = this.getAllTasks();
-  //   if (status) {
-  //     tasks = tasks.filter((task) => task.status === status);
-  //   }
-  //   if (search) {
-  //     tasks = tasks.filter(
-  //       (task) =>
-  //         task.title.includes(search) || task.description.includes(search)
-  //     );
-  //   }
-  //   return tasks;
-  // }
+
+  public getTasks(filterDto: GetTasksFilterDTO): Promise<Task[]> {
+    return this.taskRepository.getTasks(filterDto);
+  }
 
   public async getTaskById(id: number): Promise<Task> {
     const found = await this.taskRepository.findOne(id);
@@ -60,27 +46,11 @@ export class TasksService {
     return findTask;
   }
 
-  // deleteTask(id: string) {
-  //   const findTaskIndex = this.tasks.findIndex((task) => task.id === id);
-  //   if (findTaskIndex === -1) {
-  //     throw new NotFoundException(`Task with id: ${id} not found`);
-  //   }
-  //   return this.tasks.splice(findTaskIndex, 1);
-  // }
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const findTask = this.getTaskById(id);
-  //   findTask.status = status;
-  //   return findTask;
-  // }
-  // createTask(createTaskDTO: CreateTaskDTO): Task {
-  //   const { title, description } = createTaskDTO;
-  //   const task: Task = {
-  //     id: uuid(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-  //   this.tasks.push(task);
-  //   return task;
-  // }
+  public async updateTaskStatus(id: number, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+    await task.save();
+
+    return task;
+  }
 }
