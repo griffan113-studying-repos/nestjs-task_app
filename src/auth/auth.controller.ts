@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   /*   @Post("/test")
-  @UseGuards(AuthGuard()) //Aplies the scope of Auth to the method or constroller
+  @UseGuards(AuthGuard()) //Aplies the scope of Auth to the method or controller
   public test(@GetUser() user: User) {
     console.log(user);
   } */

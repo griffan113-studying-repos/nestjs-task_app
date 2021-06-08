@@ -56,7 +56,7 @@ export class TasksController {
     );
     return this.tasksService.getTasks(filterDto, user);
   }
-
+  @UseGuards(AuthGuard("jwt"))
   @Get("/:id")
   public getTaskById(
     @Param("id", ParseIntPipe) id: number,
